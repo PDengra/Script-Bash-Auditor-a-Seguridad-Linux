@@ -62,14 +62,23 @@ echo " Auditoría finalizada. Revisa: $INFORME" >> "$INFORME"
 echo "============================================" >> "$INFORME"
 
 
+echo -e "\n============================================" >> "$INFORME"
+echo " Auditoría finalizada. Revisa: $INFORME" >> "$INFORME"
+echo "============================================" >> "$INFORME"
+
 # ============================
-# 📧 Envío por Email
+# 📧 Envío por Email con asunto
 # ============================
 if command -v msmtp &> /dev/null; then
-    msmtp "$EMAIL" < "$INFORME"
+    {
+        echo "Subject: Informe de Auditoría de Seguridad - $(hostname)"
+        echo "To: $EMAIL"
+        echo "Content-Type: text/plain; charset=UTF-8"
+        echo
+        cat "$INFORME"
+    } | msmtp "$EMAIL"
     echo "📧 Informe enviado por correo a $EMAIL"
 fi
-
 
 # ============================
 # 📲 Envío por Telegram

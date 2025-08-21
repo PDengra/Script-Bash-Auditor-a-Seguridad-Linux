@@ -74,5 +74,13 @@ fi
 # ============================
 # 📲 Envío por Telegram
 # ============================
+# ============================
+# 📲 Envío por Telegram
+# ============================
 if [[ -n "$TELEGRAM_BOT_TOKEN" && -n "$TELEGRAM_CHAT_ID" ]]; then
-echo "✅ Auditoría completada. Informe guardado en: $INFORME"
+    curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendDocument" \
+        -F chat_id="$TELEGRAM_CHAT_ID" \
+        -F document=@"$INFORME" \
+        -F caption="Informe de Auditoría de Seguridad - $(hostname)"
+    echo "📲 Informe enviado por Telegram"
+fi

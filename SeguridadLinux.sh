@@ -7,7 +7,7 @@
 
 
 # Variables
-INFORME="/var/log/auditoria_seguridad_$(date +%Y%m%d).log"
+INFORME="$HOME/auditoria_seguridad_$(date +%Y%m%d).log"
 EMAIL="admin@tuservidor.com"
 TELEGRAM_BOT_TOKEN="AQUI_TU_TOKEN"
 TELEGRAM_CHAT_ID="AQUI_TU_CHAT_ID"
@@ -65,9 +65,9 @@ echo "============================================" >> "$INFORME"
 # ============================
 # 📧 Envío por Email
 # ============================
-if command -v mail &> /dev/null; then
-mail -s "Informe de Auditoría de Seguridad - $(hostname)" "$EMAIL" < "$INFORME"
-echo "📧 Informe enviado por correo a $EMAIL"
+if command -v msmtp &> /dev/null; then
+    msmtp "$EMAIL" < "$INFORME"
+    echo "📧 Informe enviado por correo a $EMAIL"
 fi
 
 
